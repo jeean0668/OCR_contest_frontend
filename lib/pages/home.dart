@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ai/services/file_picker_service.dart';
 import 'package:ai/services/ml_services.dart';
 import 'dart:typed_data';
+import 'package:ai/services/model.dart';
 
 
 class Home extends StatefulWidget {
@@ -15,7 +16,7 @@ class HomeState extends State<Home>{
   final FilePickerService _filePickerService = FilePickerService();
 
   Uint8List? defaultImage;
-  String? saveMessage; 
+  List<EncodedText>? saveMessage; 
 
   @override
   Widget build(BuildContext context){
@@ -43,7 +44,7 @@ class HomeState extends State<Home>{
       )
     );
   }
-  Widget LoadingOkText(String? message){
+  Widget LoadingOkText(List<EncodedText>? message){
     if (message == null) {
       return Center(
         child : Container(
@@ -66,13 +67,20 @@ class HomeState extends State<Home>{
         ),
       );
     } else {
+      print(message[0].texts.length);
+      print(message[0].texts);
       return Center(
+        
         child : Container(
-          child : Text(
-            message,
-            style : TextStyle(
-              fontSize : 18,
-            ),
+          child : ListView.builder(
+            shrinkWrap: true,
+            itemCount: message[0].texts.length,
+            itemBuilder : (context, index) {
+              print(message[0].texts[index]);
+              return ListTile(
+                title : Text('Item : ${message[0].texts[index]}'),
+              );
+            }
           ),
         ),
       );
@@ -110,7 +118,7 @@ class HomeState extends State<Home>{
   void selectImage() async {
     setState((){
       defaultImage = Uint8List(0);
-      saveMessage = 'no';
+      //saveMessage = 'no';
     });
     var imageData = await _filePickerService.imageFilePickAsBytes();
     if (imageData != null){
@@ -119,9 +127,8 @@ class HomeState extends State<Home>{
         defaultImage = imageData;
       });
       // image를 백엔드로 보내고 ok라는 message를 받는다.
-      print('ok');
       var saveImagemessage = await _mlService.convertImage(imageData);
-      print(saveImagemessage);
+      print(saveImagemessage.runtimeType);
       setState((){
         if (saveImagemessage == null){
           saveMessage = null;

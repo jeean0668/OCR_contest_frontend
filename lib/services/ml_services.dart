@@ -3,30 +3,53 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ai/services/model.dart';
 
 class MLService{
   Dio dio = Dio();
 
-  Future<String?> convertImage(Uint8List imageData) async{
+  Future<List<EncodedText>?> convertImage(Uint8List imageData) async{
     
     try{
-      var encodedData = await compute(base64Encode, imageData);
-      FormData formData = FormData.fromMap({
-        'image' : encodedData,
-      });
-      print('ok1');
-      Response response = await dio.post(
-        "https://jiantestflask.run.goorm.io/upload",
-        data : formData,
-      );
+      Response response = await sendImageFile(imageData);
       if (response.statusCode == 200){
-        return 'Detecting Messages are showing!';
+        // 판독된 text를 json형식으로 받는다.
+        var responseBody = response.data;
+        // http로 받은 데이터를 decode 한거 = dio로 get한 response.data
+        // 즉, decode 할 필요가 없다. 
+        var filename = responseBody['filename'];
+        var texts = responseBody['texts'].cast<String>();
+        var result = <EncodedText>[];
+        result.add(EncodedText(filename: filename, texts: texts));
+    
+        return result;
+
       } else {
         return null;
       }
     } catch(e){
-      print(e);
-      return "Error";
+      return null;
     }
+  }
+  Future<Response> sendImageFile(Uint8List image) async{
+    var encodedData = await compute(base64Encode, image);
+    FormData formData = FormData.fromMap({
+      'file' : encodedData,
+    });
+    Response response = await dio.post(
+      "http://211.244.91.156:8000/upload",
+      data : formData,
+
+    );
+    return response;
+  }
+
+  List<EncodedText> encodedTexts(String responseBody){
+    print('ok2');
+    print(jsonDecode(responseBody));
+    print(jsonDecode(responseBody).cast<Map<String, dynamic>>());
+    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+    print('ok3');
+    return parsed.map<EncodedText>((json) => EncodedText.fromJson(json)).toList();
   }
 }
