@@ -37,7 +37,8 @@ class MLService{
       'file' : encodedData,
     });
     Response response = await dio.post(
-      "http://211.244.91.156:8000/upload",
+      //"http://211.244.91.156:8000/upload",
+      "http://192.168.35.124:8000/upload",
       data : formData,
 
     );
@@ -45,11 +46,7 @@ class MLService{
   }
 
   List<EncodedText> encodedTexts(String responseBody){
-    print('ok2');
-    print(jsonDecode(responseBody));
-    print(jsonDecode(responseBody).cast<Map<String, dynamic>>());
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    print('ok3');
     return parsed.map<EncodedText>((json) => EncodedText.fromJson(json)).toList();
   }
 }

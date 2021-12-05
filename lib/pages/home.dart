@@ -1,28 +1,44 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:ai/services/file_picker_service.dart';
 import 'package:ai/services/ml_services.dart';
 import 'dart:typed_data';
 import 'package:ai/services/model.dart';
-
+//import "package:ai/services/tts.dart";
+//import "package:flutter_tts/flutter_tts.dart";
 
 class Home extends StatefulWidget {
+
   @override
   HomeState createState() => HomeState();
 }
 
-class HomeState extends State<Home>{
+class HomeState extends State<Home> {
 
   final MLService _mlService = MLService();
   final FilePickerService _filePickerService = FilePickerService();
-
+  
+  //FlutterTts tts = FlutterTts();
   Uint8List? defaultImage;
-  List<EncodedText>? saveMessage; 
+  List<EncodedText>? saveMessage;
 
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar : AppBar(
-        title : Text('Flask Image API Test'),
+        backgroundColor: Colors.grey[400],
+        
+        centerTitle: true,
+        titleSpacing: 20,
+        title : Text(
+          'Impressed Blind',
+          style : TextStyle(
+            fontFamily: 'karla',
+            fontSize : 22,
+          )
+        ),
         actions: [
           IconButton(
             icon : Icon(Icons.image),
@@ -34,16 +50,41 @@ class HomeState extends State<Home>{
         child : Column(
           children : [
             LoadingImage(defaultImage),
-            Icon(
-              Icons.keyboard_arrow_down,
-              size : 50,
-            ),
-            LoadingOkText(saveMessage),
+            LoadingButtons(),
+            //LoadingOkText(saveMessage),
           ]
         )
       )
     );
   }
+
+  Widget LoadingButtons(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(
+              Icons.camera_alt,
+              color: Colors.grey[400],
+              //Icons.camera_enhance,
+              size : 70,
+            ),
+            Icon(
+              Icons.image,
+              color : Colors.grey[400],
+              size : 70,
+            )
+          ],
+        ),
+        SizedBox(height: 20,),
+        Text('CopyRight 2021 by IB All Rights Reserved'),
+      ],
+    );
+  }
+
   Widget LoadingOkText(List<EncodedText>? message){
     if (message == null) {
       return Center(
@@ -67,10 +108,7 @@ class HomeState extends State<Home>{
         ),
       );
     } else {
-      print(message[0].texts.length);
-      print(message[0].texts);
       return Center(
-        
         child : Container(
           child : ListView.builder(
             shrinkWrap: true,
@@ -89,14 +127,7 @@ class HomeState extends State<Home>{
   Widget LoadingImage(Uint8List? image){
     if (image == null){
       return Center(
-        child : Container(
-          child : Text(
-            'No Image',
-            style : TextStyle(
-              fontSize : 18,
-            ),
-          ),
-        )
+        child : defaultBackground(context: context),
       );
     } else if (image.length == 0){
       return Center(
@@ -142,5 +173,75 @@ class HomeState extends State<Home>{
         saveMessage = null;
       });
     }
+  }
+  
+}
+
+class defaultBackground extends StatelessWidget {
+  const defaultBackground({
+    Key? key,
+    required this.context,
+  }) : super(key: key);
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.75,
+      width : MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        image : DecorationImage(
+          image : AssetImage( "assets/images/back.jpg"),
+          fit : BoxFit.cover,
+        ),
+      ),
+      child : defaultBackgroundLogo(),
+    );
+  }
+}
+
+class defaultBackgroundLogo extends StatelessWidget {
+  const defaultBackgroundLogo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child :Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height : 150.0,
+            width: 250.0,
+            child: Image(image: AssetImage('assets/images/logo.png'),)),
+          SizedBox(height : 20.0),
+          Column(
+            children : [
+              Text(
+                'Impressed',
+                style : TextStyle(
+                  fontSize : 60.0,
+                  fontFamily: 'Karla',
+                  fontWeight: FontWeight.w100,
+                  color : Colors.grey[700],
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Text(
+                'Blind',
+                style : TextStyle(
+                  fontSize : 40.0,
+                  fontFamily: 'Karla',
+                  fontWeight: FontWeight.w100,
+                  color: Colors.grey[400],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
