@@ -5,8 +5,9 @@ import 'package:ai/services/file_picker_service.dart';
 import 'package:ai/services/ml_services.dart';
 import 'dart:typed_data';
 import 'package:ai/services/model.dart';
+import 'package:get/get.dart';
 //import "package:ai/services/tts.dart";
-//import "package:flutter_tts/flutter_tts.dart";
+import "package:flutter_tts/flutter_tts.dart";
 
 class Home extends StatefulWidget {
 
@@ -51,7 +52,7 @@ class HomeState extends State<Home> {
           children : [
             LoadingImage(defaultImage),
             LoadingButtons(),
-            //LoadingOkText(saveMessage),
+            LoadingOkText(saveMessage),
           ]
         )
       )
@@ -66,16 +67,19 @@ class HomeState extends State<Home> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(
-              Icons.camera_alt,
+            IconButton(
+              icon : Icon(Icons.camera_alt),
               color: Colors.grey[400],
-              //Icons.camera_enhance,
-              size : 70,
+              iconSize : 70,
+              onPressed: (){},
+              //onPressed: () => Get.toNamed("/camera"),
+              
             ),
-            Icon(
-              Icons.image,
+            IconButton(
+              icon: Icon(Icons.image),
               color : Colors.grey[400],
-              size : 70,
+              iconSize : 70,
+              onPressed: selectImage,
             )
           ],
         ),
@@ -108,18 +112,10 @@ class HomeState extends State<Home> {
         ),
       );
     } else {
+      print('ok');
       return Center(
         child : Container(
-          child : ListView.builder(
-            shrinkWrap: true,
-            itemCount: message[0].texts.length,
-            itemBuilder : (context, index) {
-              print(message[0].texts[index]);
-              return ListTile(
-                title : Text('Item : ${message[0].texts[index]}'),
-              );
-            }
-          ),
+          child : Text(message[0].texts),
         ),
       );
     }

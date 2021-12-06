@@ -1,6 +1,6 @@
 class EncodedText{
 
-  final List<String> texts;
+  final String texts;
   final String filename;
 
   EncodedText({
@@ -12,7 +12,7 @@ class EncodedText{
   factory EncodedText.fromJson(Map<String, dynamic> json){
     return EncodedText(
       filename: json['filename'] as String,
-      texts: json['texts'] as List<String>
+      texts: json['texts'] as String
     ); 
   }
 }

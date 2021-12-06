@@ -18,7 +18,7 @@ class MLService{
         // http로 받은 데이터를 decode 한거 = dio로 get한 response.data
         // 즉, decode 할 필요가 없다. 
         var filename = responseBody['filename'];
-        var texts = responseBody['texts'].cast<String>();
+        var texts = responseBody['texts'];
         var result = <EncodedText>[];
         result.add(EncodedText(filename: filename, texts: texts));
     
@@ -37,8 +37,7 @@ class MLService{
       'file' : encodedData,
     });
     Response response = await dio.post(
-      //"http://211.244.91.156:8000/upload",
-      "http://192.168.35.124:8000/upload",
+      "http://211.244.91.156:8000/upload",
       data : formData,
 
     );
