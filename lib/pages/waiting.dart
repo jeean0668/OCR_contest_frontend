@@ -13,7 +13,11 @@ class Waiting extends GetView<DataController>{
     controller.getData();
     return Scaffold(
       body : controller.obx((state){
-        return Text('${controller.message![0].texts}');
+        if (controller.message != null){
+          return Text('${controller.message![0].texts}');
+        } else {
+          return Text('Cannot call the texts');
+        }
       },
       onLoading: LoadingPage(),
       onError : (error) => Text('Sorry. It could not connect'),
