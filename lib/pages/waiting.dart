@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai/services/model.dart';
 import 'package:ai/services/controller.dart';
+import 'package:ai/pages/tts_page.dart';
 
 class Waiting extends GetView<DataController>{
 
@@ -13,8 +14,9 @@ class Waiting extends GetView<DataController>{
     controller.getData();
     return Scaffold(
       body : controller.obx((state){
+        
         if (controller.message != null){
-          return Text('${controller.message![0].texts}');
+          return TTSPage();
         } else {
           return Text('Cannot call the texts');
         }

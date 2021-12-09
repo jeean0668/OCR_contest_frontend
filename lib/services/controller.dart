@@ -24,15 +24,12 @@ class DataController extends GetxController with StateMixin{
     // code get data
     
     if (imageData != null){
-      message = await ml_services.convertImage(imageData).then((value) 
-        {
-          change(message, status:RxStatus.success()); 
-        }, onError: (err) { change(null, status : RxStatus.error(err.toString()));},
-      );
-
+      message = await ml_services.convertImage(imageData);
+    };
+    if (message == null){
+      change(null, status : RxStatus.error());
+    } else {
+      change(message, status: RxStatus.success());
     }
-    // if done, change status to success
-    change(message, status: RxStatus.success());
-  
   }
 }

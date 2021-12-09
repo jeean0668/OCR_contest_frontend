@@ -3,6 +3,7 @@ import 'package:ai/pages/waiting.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ai/pages/tts_page.dart';
 //import 'package:ai/pages/camera.dart';
 import 'dart:async';
 import 'dart:io';
