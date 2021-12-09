@@ -13,8 +13,7 @@ class Waiting extends GetView<DataController>{
     controller.getData();
     return Scaffold(
       body : controller.obx((state){
-        print(controller.message![0].texts);
-        return Text('${controller.message![0]}');
+        return Text('${controller.message![0].texts}');
       },
       onLoading: Center(child:CircularProgressIndicator()),
       onError : (error) => Text('Sorry. It could not connect'),

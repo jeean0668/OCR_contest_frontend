@@ -14,7 +14,6 @@ class DataController extends GetxController with StateMixin{
   
   select_file() async{
     imageData = await _filePickerService.imageFilePickAsBytes();
-    print('ok1');
   }
   getData() async {
 

@@ -37,7 +37,7 @@ class MLService{
       'file' : encodedData,
     });
     Response response = await dio.post(
-      "http://211.244.91.156:8000/upload",
+      "http://180.64.184.81:8000/upload",
       data : formData,
 
     );
