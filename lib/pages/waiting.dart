@@ -15,12 +15,39 @@ class Waiting extends GetView<DataController>{
       body : controller.obx((state){
         return Text('${controller.message![0].texts}');
       },
-      onLoading: Center(child:CircularProgressIndicator()),
+      onLoading: LoadingPage(),
       onError : (error) => Text('Sorry. It could not connect'),
       )
     );
   }
+  Widget LoadingPage(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+      child: Column(
+        children: [
+          LoadingPageTitle(),
+          CircularProgressIndicator(),
+        ],
+      ),
+    );
+  }
+  Widget LoadingPageTitle(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30,60,30,60),
+      child: Text(
+        '데이터 변환 중입니다.',
+        style : TextStyle(
+          fontSize : 30,
+        ),
+      ),
+    );
+  }
 }
+
+
+
+
+
   
 
 

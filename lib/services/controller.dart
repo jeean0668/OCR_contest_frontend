@@ -1,6 +1,7 @@
 
 import 'package:ai/services/model.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 //import 'package:ai/services/model.dart';
 import 'package:ai/services/ml_services.dart';
 import 'package:ai/services/file_picker_service.dart';
@@ -21,17 +22,17 @@ class DataController extends GetxController with StateMixin{
     change(null, status : RxStatus.loading());
 
     // code get data
+    
     if (imageData != null){
-      message = await ml_services.convertImage(imageData);
-    }
+      message = await ml_services.convertImage(imageData).then((value) 
+        {
+          change(message, status:RxStatus.success()); 
+        }, onError: (err) { change(null, status : RxStatus.error(err.toString()));},
+      );
 
+    }
     // if done, change status to success
     change(message, status: RxStatus.success());
   
-  }
-
-  @override
-  void onInit(){
-    super.onInit();
   }
 }
