@@ -6,25 +6,15 @@ import 'package:ai/services/ml_services.dart';
 import 'dart:typed_data';
 import 'package:ai/services/model.dart';
 import 'package:get/get.dart';
-//import "package:ai/services/tts.dart";
-import "package:flutter_tts/flutter_tts.dart";
+import 'package:ai/services/controller.dart';
 
-class Home extends StatefulWidget {
-
-  @override
-  HomeState createState() => HomeState();
-}
-
-class HomeState extends State<Home> {
+class Home extends GetView<DataController> {
 
   final MLService _mlService = MLService();
   final FilePickerService _filePickerService = FilePickerService();
-  
-  //FlutterTts tts = FlutterTts();
-  Uint8List? defaultImage;
+  final Controller = Get.put(DataController());
   List<EncodedText>? saveMessage;
 
-  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -33,33 +23,30 @@ class HomeState extends State<Home> {
         
         centerTitle: true,
         titleSpacing: 20,
-        title : Text(
-          'Impressed Blind',
-          style : TextStyle(
-            fontFamily: 'karla',
-            fontSize : 22,
-          )
-        ),
-        actions: [
-          IconButton(
-            icon : Icon(Icons.image),
-            onPressed : selectImage,
-          ),
-        ],
+        title : loadingAppTitle(),
       ),
       body : SingleChildScrollView(
         child : Column(
           children : [
-            LoadingImage(defaultImage),
-            LoadingButtons(),
-            LoadingOkText(saveMessage),
+            LoadingImage(),
+            LoadingButtons(context),
           ]
         )
       )
     );
   }
 
-  Widget LoadingButtons(){
+  Text loadingAppTitle() {
+    return Text(
+        'Impressed Blind',
+        style : TextStyle(
+          fontFamily: 'karla',
+          fontSize : 22,
+        )
+      );
+  }
+
+  Widget LoadingButtons(BuildContext context){
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -67,119 +54,44 @@ class HomeState extends State<Home> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              icon : Icon(Icons.camera_alt),
-              color: Colors.grey[400],
-              iconSize : 70,
-              onPressed: (){},
-              //onPressed: () => Get.toNamed("/camera"),
-              
-            ),
-            IconButton(
-              icon: Icon(Icons.image),
-              color : Colors.grey[400],
-              iconSize : 70,
-              onPressed: selectImage,
-            )
+            loadingCameraButton(),
+            loadingGalleryButton()
           ],
         ),
         SizedBox(height: 20,),
-        Text('CopyRight 2021 by IB All Rights Reserved'),
       ],
     );
   }
 
-  Widget LoadingOkText(List<EncodedText>? message){
-    if (message == null) {
-      return Center(
-        child : Container(
-          child : Text(
-            'uploading is failed',
-            style : TextStyle(
-              fontSize : 18,
-            ),
-          ),
-        ),
-      );
-    } else if (message.length == 0) {
-       return Center(
-        child : Column(
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height : 5),
-            Text('Loading'),
-          ],
-        ),
-      );
-    } else {
-      print('ok');
-      return Center(
-        child : Container(
-          child : Text(message[0].texts),
-        ),
-      );
-    }
+  IconButton loadingGalleryButton() {
+    return IconButton(
+            icon: Icon(Icons.image),
+            color : Colors.grey[400],
+            iconSize : 70,
+            onPressed: () => Get.toNamed('/waiting'),
+          );
   }
-  Widget LoadingImage(Uint8List? image){
-    if (image == null){
-      return Center(
-        child : defaultBackground(context: context),
-      );
-    } else if (image.length == 0){
-      return Center(
-        child : Column(
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height : 5),
-            Text('Loading'),
-          ],
-        ),
-      );
-    } else {
-      return Image.memory(
-        image,
-        fit : BoxFit.fitWidth,
-      );
-    }
+
+  IconButton loadingCameraButton() {
+    return IconButton(
+            icon : Icon(Icons.camera_alt),
+            color: Colors.grey[400],
+            iconSize : 70,
+            onPressed: (){},
+            //onPressed: () => Get.toNamed("/camera"),
+            
+          );
   }
-  void selectImage() async {
-    setState((){
-      defaultImage = Uint8List(0);
-      //saveMessage = 'no';
-    });
-    var imageData = await _filePickerService.imageFilePickAsBytes();
-    if (imageData != null){
-      
-      setState(() {
-        defaultImage = imageData;
-      });
-      // image를 백엔드로 보내고 ok라는 message를 받는다.
-      var saveImagemessage = await _mlService.convertImage(imageData);
-      print(saveImagemessage.runtimeType);
-      setState((){
-        if (saveImagemessage == null){
-          saveMessage = null;
-        } else {
-          saveMessage = saveImagemessage;
-        }
-      });
-    } else {
-      setState((){
-        defaultImage = null;
-        saveMessage = null;
-      });
-    }
+
+  Widget LoadingImage(){
+    return Center(
+      child : defaultBackground(),
+    );
   }
-  
 }
 
 class defaultBackground extends StatelessWidget {
-  const defaultBackground({
-    Key? key,
-    required this.context,
-  }) : super(key: key);
-
-  final BuildContext context;
+  
 
   @override
   Widget build(BuildContext context) {

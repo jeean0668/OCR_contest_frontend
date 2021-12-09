@@ -1,4 +1,5 @@
 import 'package:ai/pages/home.dart';
+import 'package:ai/pages/waiting.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,12 +18,6 @@ Future<void> main() async{
 
 class MyApp extends StatelessWidget{
 
-  /*final CameraDescription camera;
-  MyApp({
-    Key? key,
-    required this.camera,
-  }) : super(key : key); */ 
-
   @override
   Widget build(BuildContext context){
     return GetMaterialApp(
@@ -30,7 +25,7 @@ class MyApp extends StatelessWidget{
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => Home()),
-        //GetPage(name :'/camera', page : () => CameraPage(camera : camera))
+        GetPage(name: '/waiting', page : () => Waiting()),
       ],
     );
   }
