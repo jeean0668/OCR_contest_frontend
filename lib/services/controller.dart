@@ -5,6 +5,7 @@ import 'dart:async';
 //import 'package:ai/services/model.dart';
 import 'package:ai/services/ml_services.dart';
 import 'package:ai/services/file_picker_service.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class DataController extends GetxController with StateMixin{
 
@@ -15,6 +16,7 @@ class DataController extends GetxController with StateMixin{
   
   select_file() async{
     imageData = await _filePickerService.imageFilePickAsBytes();
+    getData();
   }
   getData() async {
 
@@ -32,4 +34,5 @@ class DataController extends GetxController with StateMixin{
       change(message, status: RxStatus.success());
     }
   }
+
 }

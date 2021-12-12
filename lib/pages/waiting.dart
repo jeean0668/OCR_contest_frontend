@@ -4,14 +4,15 @@ import 'package:ai/services/model.dart';
 import 'package:ai/services/controller.dart';
 import 'package:ai/pages/tts_page.dart';
 
-class Waiting extends GetView<DataController>{
 
+class Waiting extends GetView<DataController>{
+  
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     // image file을 선택
     controller.select_file();
-    // send image to backend and get the texts
-    controller.getData();
+   
+
     return Scaffold(
       body : controller.obx((state){
         
