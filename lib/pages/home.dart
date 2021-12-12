@@ -25,14 +25,12 @@ class Home extends GetView<DataController> {
         titleSpacing: 20,
         title : loadingAppTitle(),
       ),
-      body : SingleChildScrollView(
-        child : Column(
-          children : [
-            LoadingImage(),
-            LoadingButtons(context),
-          ]
-        )
-      )
+      body : Column(
+        children : [
+          LoadingImage(),
+          LoadingButtons(context),
+        ]
+      ),
     );
   }
 
@@ -41,7 +39,7 @@ class Home extends GetView<DataController> {
         'Impressed Blind',
         style : TextStyle(
           fontFamily: 'karla',
-          fontSize : 22,
+          fontSize : 18,
         )
       );
   }
@@ -96,7 +94,7 @@ class defaultBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.7,
       width : MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         image : DecorationImage(
@@ -130,7 +128,7 @@ class defaultBackgroundLogo extends StatelessWidget {
               Text(
                 'Impressed',
                 style : TextStyle(
-                  fontSize : 60.0,
+                  fontSize : 45.0,
                   fontFamily: 'Karla',
                   fontWeight: FontWeight.w100,
                   color : Colors.grey[700],
@@ -140,7 +138,7 @@ class defaultBackgroundLogo extends StatelessWidget {
               Text(
                 'Blind',
                 style : TextStyle(
-                  fontSize : 40.0,
+                  fontSize : 35.0,
                   fontFamily: 'Karla',
                   fontWeight: FontWeight.w100,
                   color: Colors.grey[400],

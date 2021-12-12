@@ -14,7 +14,7 @@ class TTSPage extends GetView<DataController>{
   
     var message = controller.message![0].texts;
     TtsController tts_controller = Get.put(TtsController());
-
+    var sizeBoxHeight = MediaQuery.of(context).size.height * 0.1;
     return Scaffold(
       appBar: AppBar(
         title : Text('검색 결과'),
@@ -24,8 +24,16 @@ class TTSPage extends GetView<DataController>{
         child : ListView(
           scrollDirection: Axis.vertical,
           children: [
+            SizedBox(height: sizeBoxHeight * 0.5),
+            Text(
+              '검색하신 결과입니다.',
+              style : TextStyle(
+                fontSize: 35,
+              ),
+            ),
+            SizedBox(height:sizeBoxHeight*0.5),
             Container(
-              height : MediaQuery.of(context).size.height * 0.7,
+              height : MediaQuery.of(context).size.height * 0.5,
               width : MediaQuery.of(context).size.width * 0.5,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -34,12 +42,7 @@ class TTSPage extends GetView<DataController>{
                 ),
               ),
             ),
-            Text(
-              '검색하신 결과입니다.',
-              style : TextStyle(
-                fontSize: 35,
-              ),
-            ),
+           
             Text(message),
             ElevatedButton(
               child : Text('speak'),
