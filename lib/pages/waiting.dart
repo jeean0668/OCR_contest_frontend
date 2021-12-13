@@ -7,11 +7,21 @@ import 'package:ai/pages/tts_page.dart';
 
 class Waiting extends GetView<DataController>{
   
+  bool isCamera = false;
+
+  Waiting({
+    Key? key,
+    required this.isCamera,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // image file을 선택
-    controller.select_file();
-   
+    if (isCamera){
+      controller.take_picture();
+    } else {
+      controller.select_file();
+    }
 
     return Scaffold(
       body : controller.obx((state){
@@ -22,30 +32,29 @@ class Waiting extends GetView<DataController>{
           return Text('Cannot call the texts');
         }
       },
-      onLoading: LoadingPage(),
+      onLoading: LoadingPage(context),
       onError : (error) => Text('Sorry. It could not connect'),
       )
     );
   }
-  Widget LoadingPage(){
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+  Widget LoadingPage(BuildContext context){
+    return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LoadingPageTitle(),
+          SizedBox(height: 10,),
           CircularProgressIndicator(),
         ],
       ),
     );
   }
   Widget LoadingPageTitle(){
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(30,60,30,60),
-      child: Text(
-        '데이터 변환 중입니다.',
-        style : TextStyle(
-          fontSize : 30,
-        ),
+    return Text(
+      '데이터 변환 중입니다.',
+      style : TextStyle(
+        fontSize : 30,
       ),
     );
   }

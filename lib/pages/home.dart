@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ai/pages/waiting.dart';
 import 'package:flutter/material.dart';
 import 'package:ai/services/file_picker_service.dart';
 import 'package:ai/services/ml_services.dart';
@@ -7,6 +8,7 @@ import 'dart:typed_data';
 import 'package:ai/services/model.dart';
 import 'package:get/get.dart';
 import 'package:ai/services/controller.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class Home extends GetView<DataController> {
 
@@ -66,7 +68,7 @@ class Home extends GetView<DataController> {
             icon: Icon(Icons.image),
             color : Colors.grey[400],
             iconSize : 70,
-            onPressed: () => Get.toNamed('/waiting'),
+            onPressed: () => Get.to(() => Waiting(isCamera: false,)),
           );
   }
 
@@ -75,8 +77,7 @@ class Home extends GetView<DataController> {
             icon : Icon(Icons.camera_alt),
             color: Colors.grey[400],
             iconSize : 70,
-            onPressed: (){},
-            //onPressed: () => Get.toNamed("/camera"),
+            onPressed: () => Get.to(() => Waiting(isCamera: true,)),
             
           );
   }

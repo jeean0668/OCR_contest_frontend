@@ -2,10 +2,10 @@
 import 'package:ai/services/model.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-//import 'package:ai/services/model.dart';
 import 'package:ai/services/ml_services.dart';
 import 'package:ai/services/file_picker_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:ai/services/camera_controller.dart';
 
 class DataController extends GetxController with StateMixin{
 
@@ -14,6 +14,11 @@ class DataController extends GetxController with StateMixin{
   var _filePickerService = FilePickerService();
   var imageData;
   
+  take_picture() async{
+    Camera_Controller controller = Get.put(Camera_Controller());
+    
+  }
+
   select_file() async{
     imageData = await _filePickerService.imageFilePickAsBytes();
     getData();

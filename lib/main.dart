@@ -10,10 +10,6 @@ import 'dart:io';
 
 
 Future<void> main() async{
-
-  //final cameras = await availableCameras();
-  //final firstCamera = cameras.first;
-  //runApp(MyApp(camera : firstCamera));
   runApp(MyApp());
 }
 
@@ -26,7 +22,6 @@ class MyApp extends StatelessWidget{
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => Home()),
-        GetPage(name: '/waiting', page : () => Waiting()),
       ],
     );
   }
