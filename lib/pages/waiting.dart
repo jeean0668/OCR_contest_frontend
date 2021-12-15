@@ -33,7 +33,7 @@ class Waiting extends GetView<DataController>{
         }
       },
       onLoading: LoadingPage(context),
-      onError : (error) => Text('Sorry. It could not connect'),
+      onError : (error) => Text('Sorry. It could not connect : ${error}'),
       )
     );
   }

@@ -16,7 +16,6 @@ class DataController extends GetxController with StateMixin{
   
   take_picture() async{
     Camera_Controller controller = Get.put(Camera_Controller());
-    
   }
 
   select_file() async{
@@ -32,12 +31,11 @@ class DataController extends GetxController with StateMixin{
     
     if (imageData != null){
       message = await ml_services.convertImage(imageData);
-    };
+    }
     if (message == null){
       change(null, status : RxStatus.error());
     } else {
       change(message, status: RxStatus.success());
     }
   }
-
 }
