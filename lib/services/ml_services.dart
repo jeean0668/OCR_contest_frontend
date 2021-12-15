@@ -19,8 +19,9 @@ class MLService{
         // 즉, decode 할 필요가 없다. 
         var filename = responseBody['filename'];
         var texts = responseBody['texts'];
+        var ingredients = responseBody['ingredients'];
         var result = <EncodedText>[];
-        result.add(EncodedText(filename: filename, texts: texts));
+        result.add(EncodedText(filename: filename, texts: texts, ingredients: ingredients ));
     
         return result;
 
