@@ -1,11 +1,15 @@
 
 import 'package:ai/services/model.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:ai/services/ml_services.dart';
 import 'package:ai/services/file_picker_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:ai/services/camera_controller.dart';
+import 'package:ai/pages/camera_page.dart';
+import 'package:flutter/material.dart';
 
 class DataController extends GetxController with StateMixin{
 
@@ -15,7 +19,20 @@ class DataController extends GetxController with StateMixin{
   var imageData;
   
   take_picture() async{
-    Camera_Controller controller = Get.put(Camera_Controller());
+    //Camera_Controller controller = Get.put(Camera_Controller());
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    Get.to(CameraPage(camera : firstCamera));
+  }
+
+  getTakePictureData(String imagePath) async{
+    print('ok3');
+    print(imagePath);
+    final bytes = await rootBundle.load(imagePath);
+    print('ok4');
+    imageData = bytes.buffer.asUint8List();
+    
+    getData();
   }
 
   select_file() async{

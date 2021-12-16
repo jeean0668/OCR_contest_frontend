@@ -7,7 +7,7 @@ import 'package:ai/pages/tts_page.dart';
 
 class Waiting extends GetView<DataController>{
   
-  bool isCamera = false;
+  bool isCamera;
 
   Waiting({
     Key? key,

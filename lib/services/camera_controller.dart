@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 
 class Camera_Controller extends GetxController{
 
-  List<CameraDescription>? cameras;
   CameraController? controller;
-  bool _isCameraInitialized = false;
-
+  
   @override
   void onInit(){
     super.onInit();
-    findCamera();
-    openController();
+    setupCamera();
   }
 
   @override
@@ -21,20 +18,11 @@ class Camera_Controller extends GetxController{
     super.dispose();
   }
 
-  findCamera() async{
-    try{
-      WidgetsFlutterBinding.ensureInitialized();
-      cameras = await availableCameras();
-    } on CameraException catch(e){
-      print('Error in fetching the cameras : $e');
-    }
-  }
-
-  openController() {
-    final CameraController cameraController = CameraController(
-      cameras![0], 
-      ResolutionPreset.max,
+  Future setupCamera() async{
+    final cameras = await availableCameras();
+    controller = CameraController(
+      cameras.first,
+      ResolutionPreset.medium,
     );
-    controller = cameraController;
   }
 }

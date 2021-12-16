@@ -4,12 +4,13 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai/pages/tts_page.dart';
-//import 'package:ai/pages/camera.dart';
+import 'package:ai/pages/camera_page.dart';
 import 'dart:async';
 import 'dart:io';
 
 
 Future<void> main() async{
+
   runApp(MyApp());
 }
 
