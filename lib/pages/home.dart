@@ -68,7 +68,7 @@ class Home extends GetView<DataController> {
             icon: Icon(Icons.image),
             color : Colors.grey[400],
             iconSize : 70,
-            onPressed: () => Get.to(() => Waiting(isCamera: false,)),
+            onPressed: () => Get.to(() => Waiting(isCamera: 1,)),
           );
   }
 
@@ -77,7 +77,7 @@ class Home extends GetView<DataController> {
             icon : Icon(Icons.camera_alt),
             color: Colors.grey[400],
             iconSize : 70,
-            onPressed: () => Get.to(() => Waiting(isCamera: true,)),
+            onPressed: () => Get.to(() => Waiting(isCamera: 0,)),
             
           );
   }

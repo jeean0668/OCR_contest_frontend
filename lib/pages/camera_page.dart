@@ -113,8 +113,8 @@ class DisplayPictureScreen extends StatelessWidget {
           IconButton(
             icon : Icon(Icons.open_in_browser),
             onPressed: () {
-              print('ok');
               controller.getTakePictureData(imagePath);
+              Get.to(Waiting(isCamera: 2));
             }
           ),
           Text('ok'),

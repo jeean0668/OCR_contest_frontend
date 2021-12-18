@@ -43,6 +43,7 @@ dependencies:
   get:
   google_speech: ^2.0.1
   google_fonts: ^2.1.0
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:

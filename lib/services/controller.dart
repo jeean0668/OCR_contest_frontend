@@ -10,6 +10,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:ai/services/camera_controller.dart';
 import 'package:ai/pages/camera_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class DataController extends GetxController with StateMixin{
 
@@ -26,12 +28,8 @@ class DataController extends GetxController with StateMixin{
   }
 
   getTakePictureData(String imagePath) async{
-    print('ok3');
-    print(imagePath);
     final bytes = await rootBundle.load(imagePath);
-    print('ok4');
     imageData = bytes.buffer.asUint8List();
-    
     getData();
   }
 

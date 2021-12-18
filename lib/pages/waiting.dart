@@ -7,7 +7,7 @@ import 'package:ai/pages/tts_page.dart';
 
 class Waiting extends GetView<DataController>{
   
-  bool isCamera;
+  int isCamera;
 
   Waiting({
     Key? key,
@@ -17,11 +17,11 @@ class Waiting extends GetView<DataController>{
   @override
   Widget build(BuildContext context) {
     // image file을 선택
-    if (isCamera){
+    if (isCamera == 0){
       controller.take_picture();
-    } else {
+    } else if(isCamera == 1) {
       controller.select_file();
-    }
+    } 
 
     return Scaffold(
       body : controller.obx((state){
